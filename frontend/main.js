@@ -2,7 +2,7 @@
 // CONFIGURATION - REPLACE THESE VALUES
 // ========================================
 const LIFF_ID = "YOUR_LIFF_ID_HERE";
-const BACKEND_URL = "https://YOUR_BACKEND_DOMAIN";
+const BACKEND_URL = "https://gmf-liff-backend.onrender.com";
 
 // ========================================
 // GLOBAL VARIABLES
