@@ -98,7 +98,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
             if (response.ok && result.ok) {
                 console.log("Form submitted successfully");
-                alert("✅ Your order has been submitted successfully!\n\nOur sales team will contact you shortly.");
+
+                // Personalized success message with customer's name
+                const customerName = userProfile?.displayName || "Valued Customer";
+                alert(`✅ Thank you, ${customerName}!\n\nYour order has been submitted successfully.\n\nOur sales team will contact you shortly.`);
 
                 // Close LIFF window after short delay
                 setTimeout(() => {
