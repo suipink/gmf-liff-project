@@ -191,9 +191,15 @@ app.use((err, req, res, next) => {
 // ========================================
 // START SERVER
 // ========================================
-app.listen(PORT, () => {
-    console.log("🚀 GMF LIFF Backend Server started");
-    console.log(`📍 Running on port: ${PORT}`);
-    console.log(`🌐 Health check: http://localhost:${PORT}/`);
-    console.log("✅ Ready to receive form submissions");
-});
+// Only start server if running directly (not on Vercel)
+if (process.env.VERCEL !== '1') {
+    app.listen(PORT, () => {
+        console.log("🚀 GMF LIFF Backend Server started");
+        console.log(`📍 Running on port: ${PORT}`);
+        console.log(`🌐 Health check: http://localhost:${PORT}/`);
+        console.log("✅ Ready to receive form submissions");
+    });
+}
+
+// Export for Vercel serverless
+module.exports = app;
