@@ -1,0 +1,121 @@
+// ========================================
+// CONFIGURATION - REPLACE THESE VALUES
+// ========================================
+const LIFF_ID = "YOUR_LIFF_ID_HERE";
+const BACKEND_URL = "https://YOUR_BACKEND_DOMAIN";
+
+// ========================================
+// GLOBAL VARIABLES
+// ========================================
+let userProfile = null;
+
+// ========================================
+// LIFF INITIALIZATION
+// ========================================
+window.onload = async function() {
+    try {
+        console.log("Initializing LIFF...");
+        await liff.init({ liffId: LIFF_ID });
+        console.log("LIFF initialized successfully");
+
+        // Check if user is logged in
+        if (!liff.isLoggedIn()) {
+            console.log("User not logged in, redirecting to login...");
+            liff.login();
+            return;
+        }
+
+        // Get user profile
+        console.log("Getting user profile...");
+        userProfile = await liff.getProfile();
+        console.log("User profile obtained:", userProfile);
+
+        // Optional: Display user info
+        displayUserInfo();
+
+    } catch (error) {
+        console.error("LIFF initialization failed:", error);
+        alert("Failed to initialize LIFF. Please try again.");
+    }
+};
+
+// ========================================
+// DISPLAY USER INFO (OPTIONAL)
+// ========================================
+function displayUserInfo() {
+    if (userProfile) {
+        console.log(`Logged in as: ${userProfile.displayName} (${userProfile.userId})`);
+        // You can optionally display the user's name in the UI here
+    }
+}
+
+// ========================================
+// FORM SUBMISSION HANDLER
+// ========================================
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("clientForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const loadingDiv = document.getElementById("loading");
+
+    form.addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        // Check if we have user profile
+        if (!userProfile || !userProfile.userId) {
+            alert("User profile not loaded. Please refresh and try again.");
+            return;
+        }
+
+        // Disable submit button and show loading
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending...";
+        loadingDiv.style.display = "block";
+
+        // Collect form data
+        const formData = {
+            company: document.getElementById("company").value.trim(),
+            contact: document.getElementById("contact").value.trim(),
+            product: document.getElementById("product").value.trim(),
+            quantity: parseInt(document.getElementById("quantity").value),
+            deadline: document.getElementById("deadline").value || "",
+            notes: document.getElementById("notes").value.trim() || "",
+            userId: userProfile.userId
+        };
+
+        try {
+            console.log("Submitting form data:", formData);
+
+            // Send data to backend
+            const response = await fetch(`${BACKEND_URL}/liff-submit`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.ok) {
+                console.log("Form submitted successfully");
+                alert("✅ Your order has been submitted successfully!\n\nOur sales team will contact you shortly.");
+
+                // Close LIFF window after short delay
+                setTimeout(() => {
+                    liff.closeWindow();
+                }, 1500);
+            } else {
+                throw new Error(result.message || "Submission failed");
+            }
+
+        } catch (error) {
+            console.error("Submission error:", error);
+            alert("❌ Failed to submit your order. Please try again or contact our sales team directly.");
+
+            // Re-enable submit button
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Submit Order";
+            loadingDiv.style.display = "none";
+        }
+    });
+});

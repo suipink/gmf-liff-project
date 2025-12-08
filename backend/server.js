@@ -1,0 +1,195 @@
+// ========================================
+// GMF LIFF BACKEND SERVER
+// ========================================
+
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const axios = require("axios");
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// ========================================
+// MIDDLEWARE
+// ========================================
+app.use(cors()); // Allow cross-origin requests from LIFF frontend
+app.use(express.json()); // Parse JSON request bodies
+
+// ========================================
+// CONFIGURATION
+// ========================================
+const CHANNEL_ACCESS_TOKEN = process.env.CHANNEL_ACCESS_TOKEN;
+const LINE_MESSAGING_API_URL = "https://api.line.me/v2/bot/message/push";
+
+// Validate environment variables
+if (!CHANNEL_ACCESS_TOKEN) {
+    console.error("❌ ERROR: CHANNEL_ACCESS_TOKEN is not set in .env file");
+    process.exit(1);
+}
+
+// ========================================
+// HEALTH CHECK ENDPOINT
+// ========================================
+app.get("/", (req, res) => {
+    res.json({
+        status: "ok",
+        message: "GMF LIFF Backend is running",
+        timestamp: new Date().toISOString()
+    });
+});
+
+// ========================================
+// LIFF FORM SUBMISSION ENDPOINT
+// ========================================
+app.post("/liff-submit", async (req, res) => {
+    try {
+        console.log("📥 Received form submission:", req.body);
+
+        // Extract form data
+        const {
+            company,
+            contact,
+            product,
+            quantity,
+            deadline,
+            notes,
+            userId
+        } = req.body;
+
+        // Validate required fields
+        if (!company || !contact || !product || !quantity || !userId) {
+            console.error("❌ Validation error: Missing required fields");
+            return res.status(400).json({
+                ok: false,
+                message: "Missing required fields"
+            });
+        }
+
+        // Format the message for LINE OA
+        const message = formatClientMessage({
+            company,
+            contact,
+            product,
+            quantity,
+            deadline,
+            notes,
+            userId
+        });
+
+        console.log("📤 Sending message to LINE user:", userId);
+
+        // Send message via LINE Messaging API
+        const response = await axios.post(
+            LINE_MESSAGING_API_URL,
+            {
+                to: userId,
+                messages: [
+                    {
+                        type: "text",
+                        text: message
+                    }
+                ]
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${CHANNEL_ACCESS_TOKEN}`
+                }
+            }
+        );
+
+        console.log("✅ Message sent successfully to LINE");
+
+        // Return success response
+        res.json({
+            ok: true,
+            message: "Form submitted successfully"
+        });
+
+    } catch (error) {
+        console.error("❌ Error processing form submission:", error.message);
+
+        if (error.response) {
+            // LINE API error
+            console.error("LINE API Error:", error.response.data);
+            return res.status(error.response.status).json({
+                ok: false,
+                message: "Failed to send message via LINE API",
+                error: error.response.data
+            });
+        }
+
+        // General server error
+        res.status(500).json({
+            ok: false,
+            message: "Internal server error"
+        });
+    }
+});
+
+// ========================================
+// MESSAGE FORMATTER
+// ========================================
+function formatClientMessage(data) {
+    const {
+        company,
+        contact,
+        product,
+        quantity,
+        deadline,
+        notes,
+        userId
+    } = data;
+
+    // Format deadline for better readability
+    let formattedDeadline = "-";
+    if (deadline) {
+        try {
+            const date = new Date(deadline);
+            formattedDeadline = date.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            });
+        } catch (e) {
+            formattedDeadline = deadline;
+        }
+    }
+
+    // Build the message
+    const message = `📌 New Client Submission
+
+🏢 Company: ${company}
+👤 Contact: ${contact}
+📦 Product: ${product}
+🔢 Quantity: ${quantity}
+📅 Target Delivery: ${formattedDeadline}
+📝 Notes:
+${notes || "-"}
+
+(From LINE user: ${userId})`;
+
+    return message;
+}
+
+// ========================================
+// ERROR HANDLING MIDDLEWARE
+// ========================================
+app.use((err, req, res, next) => {
+    console.error("Unhandled error:", err);
+    res.status(500).json({
+        ok: false,
+        message: "An unexpected error occurred"
+    });
+});
+
+// ========================================
+// START SERVER
+// ========================================
+app.listen(PORT, () => {
+    console.log("🚀 GMF LIFF Backend Server started");
+    console.log(`📍 Running on port: ${PORT}`);
+    console.log(`🌐 Health check: http://localhost:${PORT}/`);
+    console.log("✅ Ready to receive form submissions");
+});
