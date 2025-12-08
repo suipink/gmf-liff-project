@@ -170,9 +170,7 @@ function formatClientMessage(data) {
 🔢 Quantity: ${quantity}
 📅 Target Delivery: ${formattedDeadline}
 📝 Notes:
-${notes || "-"}
-
-(From LINE user: ${userId})`;
+${notes || "-"}`;
 
     return message;
 }
