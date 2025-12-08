@@ -146,16 +146,36 @@ function formatClientMessage(data) {
         userId
     } = data;
 
-    // Format deadline for better readability
+    // Format deadline for better readability and calculate days
     let formattedDeadline = "-";
     if (deadline) {
         try {
-            const date = new Date(deadline);
-            formattedDeadline = date.toLocaleDateString("en-US", {
+            const deadlineDate = new Date(deadline);
+            const today = new Date();
+
+            // Reset time to midnight for accurate day calculation
+            today.setHours(0, 0, 0, 0);
+            deadlineDate.setHours(0, 0, 0, 0);
+
+            // Calculate difference in days
+            const diffTime = deadlineDate - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            // Format the date
+            const dateString = deadlineDate.toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "long",
                 day: "numeric"
             });
+
+            // Add days count if deadline is set
+            if (diffDays > 0) {
+                formattedDeadline = `${dateString} (${diffDays} days)`;
+            } else if (diffDays === 0) {
+                formattedDeadline = `${dateString} (Today)`;
+            } else {
+                formattedDeadline = `${dateString} (${Math.abs(diffDays)} days ago)`;
+            }
         } catch (e) {
             formattedDeadline = deadline;
         }
