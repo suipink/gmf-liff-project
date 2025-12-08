@@ -1,7 +1,7 @@
 // ========================================
 // CONFIGURATION - REPLACE THESE VALUES
 // ========================================
-const LIFF_ID = "YOUR_LIFF_ID_HERE";
+const LIFF_ID = "2008616244-wogGrZQL";
 const BACKEND_URL = "https://gmf-liff-backend.onrender.com";
 
 // ========================================
