@@ -54,3 +54,8 @@ Thumbs.db
 *.cert
 credentials.json
 secrets.json
+
+# ========================================
+# Brand Assets
+# ========================================
+brand assets/
