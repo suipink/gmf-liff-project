@@ -8,7 +8,7 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: 'Poppins', 'Prompt', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background: linear-gradient(135deg, #FFC600 0%, #FFD633 100%);
     min-height: 100vh;
     padding: 20px;
@@ -95,7 +95,7 @@ textarea {
     border-radius: 8px;
     background: #fafafa;
     transition: all 0.3s ease;
-    font-family: inherit;
+    font-family: 'Poppins', 'Prompt', sans-serif;
 }
 
 /* Date input specific styles */
