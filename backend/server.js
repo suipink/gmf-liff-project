@@ -14,9 +14,9 @@ const PORT = process.env.PORT || 3000;
 // MIDDLEWARE
 // ========================================
 app.use(cors({
-    origin: ['https://suipink.github.io', 'https://liff.line.me'],
+    origin: true, // Allow all origins for LIFF compatibility
     credentials: true,
-    methods: ['GET', 'POST']
+    methods: ['GET', 'POST', 'OPTIONS']
 })); // Allow cross-origin requests from LIFF frontend
 app.use(express.json()); // Parse JSON request bodies
 
