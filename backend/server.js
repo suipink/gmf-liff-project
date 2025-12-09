@@ -202,19 +202,16 @@ function formatClientMessage(data) {
     // Build the message
     const message = `📌 Client Inquiry
 ━━━━━━━━━━━━━
-⏰ Submitted: ${submittedDateTime}
-
+✅ ${submittedDateTime}
 ━━━━━━━━━━━━━
 🏢 ${company}
 👤 ${contact}
 📞 ${phone}
-
 ━━━━━━━━━━━━━
 📦 Product: ${product}
 🔢 Quantity: ${quantity}
 💰 Budget: ${budget}
 📅 Target Date: ${formattedDeadline}
-
 ━━━━━━━━━━━━━
 📝 NOTES
 ${notes || "-"}`;
