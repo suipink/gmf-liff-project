@@ -75,8 +75,10 @@ document.addEventListener("DOMContentLoaded", function() {
         const formData = {
             company: document.getElementById("company").value.trim(),
             contact: document.getElementById("contact").value.trim(),
+            phone: document.getElementById("phone").value.trim(),
             product: document.getElementById("product").value.trim(),
             quantity: parseInt(document.getElementById("quantity").value),
+            budget: document.getElementById("budget").value,
             deadline: document.getElementById("deadline").value || "",
             notes: document.getElementById("notes").value.trim() || "",
             userId: userProfile.userId

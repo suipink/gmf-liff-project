@@ -18,13 +18,13 @@
             <div class="logo">
                 <img src="logo.png" alt="GMF Logo" id="brandLogo">
             </div>
-            <h1>Client Order Form</h1>
-            <p class="subtitle">Please fill in your order details</p>
+            <h1>Client Order Form / ใบสั่งซื้อ</h1>
+            <p class="subtitle">Please fill in your order details / กรุณากรอกข้อมูลการสั่งซื้อ</p>
         </div>
 
         <form id="clientForm">
             <div class="form-group">
-                <label for="company">Company Name <span class="required">*</span></label>
+                <label for="company">Company Name / ชื่อบริษัท <span class="required">*</span></label>
                 <input
                     type="text"
                     id="company"
@@ -35,7 +35,7 @@
             </div>
 
             <div class="form-group">
-                <label for="contact">Contact Person <span class="required">*</span></label>
+                <label for="contact">Contact Person / ชื่อผู้ติดต่อ <span class="required">*</span></label>
                 <input
                     type="text"
                     id="contact"
@@ -46,18 +46,29 @@
             </div>
 
             <div class="form-group">
-                <label for="product">Product <span class="required">*</span></label>
+                <label for="phone">Phone / เบอร์โทรศัพท์ <span class="required">*</span></label>
                 <input
-                    type="text"
-                    id="product"
-                    name="product"
-                    placeholder="e.g., Widget Model X"
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="e.g., 081-234-5678"
                     required
                 >
             </div>
 
             <div class="form-group">
-                <label for="quantity">Quantity <span class="required">*</span></label>
+                <label for="product">Product / สินค้า <span class="required">*</span></label>
+                <input
+                    type="text"
+                    id="product"
+                    name="product"
+                    placeholder="e.g., Custom Gifts"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Quantity / จำนวน <span class="required">*</span></label>
                 <input
                     type="number"
                     id="quantity"
@@ -69,7 +80,25 @@
             </div>
 
             <div class="form-group">
-                <label for="deadline">Target Delivery Date</label>
+                <label for="budget">Budget Range / งบประมาณ <span class="required">*</span></label>
+                <select
+                    id="budget"
+                    name="budget"
+                    required
+                >
+                    <option value="">Select budget range / เลือกช่วงงบประมาณ</option>
+                    <option value="<100 THB">&lt;100 THB</option>
+                    <option value="100-200 THB">100-200 THB</option>
+                    <option value="200-300 THB">200-300 THB</option>
+                    <option value="300-400 THB">300-400 THB</option>
+                    <option value="400-500 THB">400-500 THB</option>
+                    <option value="500-1,000 THB">500-1,000 THB</option>
+                    <option value=">1,000 THB">&gt;1,000 THB</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="deadline">Target Delivery Date / วันที่ต้องการสินค้า</label>
                 <input
                     type="date"
                     id="deadline"
@@ -78,7 +107,7 @@
             </div>
 
             <div class="form-group">
-                <label for="notes">Additional Notes</label>
+                <label for="notes">Additional Notes / หมายเหตุเพิ่มเติม</label>
                 <textarea
                     id="notes"
                     name="notes"
@@ -88,7 +117,7 @@
             </div>
 
             <button type="submit" id="submitBtn" class="submit-btn">
-                Submit Order
+                Submit Order / ส่งคำสั่งซื้อ
             </button>
         </form>
 

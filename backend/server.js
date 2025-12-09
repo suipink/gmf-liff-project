@@ -54,15 +54,17 @@ app.post("/liff-submit", async (req, res) => {
         const {
             company,
             contact,
+            phone,
             product,
             quantity,
+            budget,
             deadline,
             notes,
             userId
         } = req.body;
 
         // Validate required fields
-        if (!company || !contact || !product || !quantity || !userId) {
+        if (!company || !contact || !phone || !product || !quantity || !budget || !userId) {
             console.error("❌ Validation error: Missing required fields");
             return res.status(400).json({
                 ok: false,
@@ -74,8 +76,10 @@ app.post("/liff-submit", async (req, res) => {
         const message = formatClientMessage({
             company,
             contact,
+            phone,
             product,
             quantity,
+            budget,
             deadline,
             notes,
             userId
@@ -139,8 +143,10 @@ function formatClientMessage(data) {
     const {
         company,
         contact,
+        phone,
         product,
         quantity,
+        budget,
         deadline,
         notes,
         userId
@@ -186,8 +192,10 @@ function formatClientMessage(data) {
 
 🏢 Company: ${company}
 👤 Contact: ${contact}
+📞 Phone: ${phone}
 📦 Product: ${product}
 🔢 Quantity: ${quantity}
+💰 Budget: ${budget}
 📅 Target Delivery: ${formattedDeadline}
 📝 Notes:
 ${notes || "-"}`;
