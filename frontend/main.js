@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         window.close();
                         // If window.close() fails, the success message will remain visible
                     }
-                }, 2000);
+                }, 1000);
 
             } else {
                 // Backend returned an error

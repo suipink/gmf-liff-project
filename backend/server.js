@@ -243,7 +243,7 @@ app.post("/liff-submit", limiter, async (req, res) => {
                         "Content-Type": "application/json",
                         "Authorization": `Bearer ${CHANNEL_ACCESS_TOKEN}`
                     },
-                    timeout: 10000 // 10 second timeout
+                    timeout: 5000 // 5 second timeout
                 }
             );
 
