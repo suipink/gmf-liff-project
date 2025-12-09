@@ -199,42 +199,42 @@ function formatClientMessage(data) {
         hour12: false
     });
 
-    // Build the bilingual message
-    const message = `📌 New Client Submission / ใบสั่งซื้อใหม่
+    // Build the message
+    const message = `📌 New Client Submission
 ━━━━━━━━━━━━━━━━━━━━
 
-⏰ Submitted / วันที่ส่ง:
+⏰ Submitted:
 ${submittedDateTime}
 
 ━━━━━━━━━━━━━━━━━━━━
-👥 CLIENT INFORMATION / ข้อมูลลูกค้า
+👥 CLIENT INFORMATION
 
-🏢 Company / บริษัท:
+🏢 Company:
 ${company}
 
-👤 Contact Person / ผู้ติดต่อ:
+👤 Contact Person:
 ${contact}
 
-📞 Phone / โทร:
+📞 Phone:
 ${phone}
 
 ━━━━━━━━━━━━━━━━━━━━
-📦 ORDER DETAILS / รายละเอียดคำสั่งซื้อ
+📦 ORDER DETAILS
 
-📦 Product / สินค้า:
+📦 Product:
 ${product}
 
-🔢 Quantity / จำนวน:
+🔢 Quantity:
 ${quantity}
 
-💰 Budget Range / งบประมาณ:
+💰 Budget Range:
 ${budget}
 
-📅 Target Delivery / วันที่ต้องการ:
+📅 Target Delivery:
 ${formattedDeadline}
 
 ━━━━━━━━━━━━━━━━━━━━
-📝 ADDITIONAL NOTES / หมายเหตุเพิ่มเติม
+📝 ADDITIONAL NOTES
 
 ${notes || "-"}`;
 
