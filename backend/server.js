@@ -64,7 +64,7 @@ app.post("/liff-submit", async (req, res) => {
         } = req.body;
 
         // Validate required fields
-        if (!company || !contact || !phone || !product || !quantity || !budget || !userId) {
+        if (!company || !contact || !phone || !product || !quantity || !budget || !deadline || !userId) {
             console.error("❌ Validation error: Missing required fields");
             return res.status(400).json({
                 ok: false,
@@ -202,17 +202,40 @@ function formatClientMessage(data) {
     // Build the bilingual message
     const message = `📌 New Client Submission / ใบสั่งซื้อใหม่
 ━━━━━━━━━━━━━━━━━━━━
-⏰ Submitted / วันที่ส่ง: ${submittedDateTime}
 
-🏢 Company / บริษัท: ${company}
-👤 Contact / ผู้ติดต่อ: ${contact}
-📞 Phone / โทร: ${phone}
-📦 Product / สินค้า: ${product}
-🔢 Quantity / จำนวน: ${quantity}
-💰 Budget / งบประมาณ: ${budget}
-📅 Target Delivery / วันที่ต้องการ: ${formattedDeadline}
+⏰ Submitted / วันที่ส่ง:
+${submittedDateTime}
+
 ━━━━━━━━━━━━━━━━━━━━
-📝 Notes / หมายเหตุ:
+👥 CLIENT INFORMATION / ข้อมูลลูกค้า
+
+🏢 Company / บริษัท:
+${company}
+
+👤 Contact Person / ผู้ติดต่อ:
+${contact}
+
+📞 Phone / โทร:
+${phone}
+
+━━━━━━━━━━━━━━━━━━━━
+📦 ORDER DETAILS / รายละเอียดคำสั่งซื้อ
+
+📦 Product / สินค้า:
+${product}
+
+🔢 Quantity / จำนวน:
+${quantity}
+
+💰 Budget Range / งบประมาณ:
+${budget}
+
+📅 Target Delivery / วันที่ต้องการ:
+${formattedDeadline}
+
+━━━━━━━━━━━━━━━━━━━━
+📝 ADDITIONAL NOTES / หมายเหตุเพิ่มเติม
+
 ${notes || "-"}`;
 
     return message;
