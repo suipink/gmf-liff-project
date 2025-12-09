@@ -205,18 +205,18 @@ function formatClientMessage(data) {
 ⏰ Submitted: ${submittedDateTime}
 
 ━━━━━━━━━━━━━
-🏢 Company: ${company}
-👤 Contact Person: ${contact}
-📞 Phone: ${phone}
+🏢 ${company}
+👤 ${contact}
+📞 ${phone}
 
 ━━━━━━━━━━━━━
 📦 Product: ${product}
 🔢 Quantity: ${quantity}
-💰 Budget Range: ${budget}
-📅 Target Delivery: ${formattedDeadline}
+💰 Budget: ${budget}
+📅 Target Date: ${formattedDeadline}
 
 ━━━━━━━━━━━━━
-📝 ADDITIONAL NOTES
+📝 NOTES
 ${notes || "-"}`;
 
     return message;
