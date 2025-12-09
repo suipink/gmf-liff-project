@@ -53,13 +53,14 @@
                     type="tel"
                     id="phone"
                     name="phone"
-                    placeholder="e.g., 025555555 ext. 6545"
-                    pattern="[0-9\-\+\(\)\s\.a-zA-Z]+"
-                    title="Please enter a valid phone number (numbers, spaces, dashes, +, (), ., ext. allowed)"
+                    placeholder="e.g., 081-234-5678, 053-123456, +66-81-234-5678"
+                    pattern="[0-9\-\+\(\)\s\.]+"
+                    title="Please enter a valid phone number (Thai or international with country code)"
                     minlength="9"
+                    maxlength="25"
                     required
                 >
-                <small class="help-text">Accepts extensions (ext., x) and international formats</small>
+                <small class="help-text">Thai mobile/landline or international (+country code). For extensions, use Additional Notes</small>
             </div>
 
             <div class="form-group">
