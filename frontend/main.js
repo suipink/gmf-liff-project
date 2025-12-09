@@ -10,6 +10,29 @@ const BACKEND_URL = "https://gmf-liff-project.vercel.app";
 let userProfile = null;
 
 // ========================================
+// OFFLINE/ONLINE DETECTION
+// ========================================
+window.addEventListener('offline', () => {
+    showNotification('⚠️ No internet connection. Please check your network.', 'warning');
+});
+
+window.addEventListener('online', () => {
+    showNotification('✅ Connection restored!', 'success');
+});
+
+// ========================================
+// NOTIFICATION HELPER
+// ========================================
+function showNotification(message, type = 'info') {
+    // Simple alert for now - could be upgraded to toast notifications
+    if (type === 'error' || type === 'warning') {
+        alert(message);
+    } else {
+        console.log(message);
+    }
+}
+
+// ========================================
 // LIFF INITIALIZATION
 // ========================================
 window.onload = async function() {
@@ -28,14 +51,27 @@ window.onload = async function() {
         // Get user profile
         console.log("Getting user profile...");
         userProfile = await liff.getProfile();
-        console.log("User profile obtained:", userProfile);
+        console.log("User profile obtained:", userProfile.displayName);
 
         // Optional: Display user info
         displayUserInfo();
 
     } catch (error) {
         console.error("LIFF initialization failed:", error);
-        alert("Failed to initialize LIFF. Please try again.");
+
+        // Show user-friendly error page
+        document.body.innerHTML = `
+            <div style="text-align: center; padding: 40px 20px; font-family: 'Poppins', sans-serif;">
+                <div style="font-size: 64px; margin-bottom: 20px;">⚠️</div>
+                <h2 style="color: #3F4443; margin-bottom: 16px;">Unable to Load Form</h2>
+                <p style="color: #666; font-size: 16px; margin-bottom: 24px;">
+                    Please open this form from the LINE app
+                </p>
+                <p style="color: #aaa; font-size: 12px;">
+                    Error: ${error.message || 'LIFF initialization failed'}
+                </p>
+            </div>
+        `;
     }
 };
 
@@ -62,7 +98,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Check if we have user profile
         if (!userProfile || !userProfile.userId) {
-            alert("User profile not loaded. Please refresh and try again.");
+            alert("⚠️ User profile not loaded. Please refresh the page and try again.");
+            return;
+        }
+
+        // Check if online
+        if (!navigator.onLine) {
+            alert("⚠️ No internet connection. Please check your network and try again.");
             return;
         }
 
@@ -84,17 +126,24 @@ document.addEventListener("DOMContentLoaded", function() {
             userId: userProfile.userId
         };
 
-        try {
-            console.log("Submitting form data:", formData);
+        // Setup timeout controller
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
 
-            // Send data to backend
+        try {
+            console.log("Submitting form data...");
+
+            // Send data to backend with timeout
             const response = await fetch(`${BACKEND_URL}/liff-submit`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(formData),
+                signal: controller.signal
             });
+
+            clearTimeout(timeoutId);
 
             const result = await response.json();
 
@@ -127,18 +176,42 @@ document.addEventListener("DOMContentLoaded", function() {
                         // Mobile LINE app - close LIFF window
                         liff.closeWindow();
                     } else {
-                        // Desktop browser - try to close tab (may not work for all cases)
+                        // Desktop browser - try to close tab
                         window.close();
                         // If window.close() fails, the success message will remain visible
                     }
                 }, 2000);
+
             } else {
+                // Backend returned an error
                 throw new Error(result.message || "Submission failed");
             }
 
         } catch (error) {
             console.error("Submission error:", error);
-            alert("❌ Failed to submit your inquiry. Please try again or contact our sales team directly.");
+
+            let errorMessage = "❌ Failed to submit your inquiry.";
+
+            // Provide specific error messages
+            if (error.name === 'AbortError') {
+                errorMessage = "⏱️ Request timed out. Please check your internet connection and try again.";
+            } else if (error.message.includes("network") || error.message.includes("fetch")) {
+                errorMessage = "🌐 Network error. Please check your internet connection and try again.";
+            } else if (error.message.includes("Too many submissions")) {
+                errorMessage = "⚠️ Too many submissions. Please wait 15 minutes before trying again.";
+            } else if (error.message.includes("phone")) {
+                errorMessage = "📞 " + error.message;
+            } else if (error.message.includes("quantity")) {
+                errorMessage = "🔢 " + error.message;
+            } else if (error.message.includes("delivery date")) {
+                errorMessage = "📅 " + error.message;
+            } else if (error.message) {
+                errorMessage = "❌ " + error.message;
+            }
+
+            errorMessage += "\n\nPlease try again or contact our sales team directly.";
+
+            alert(errorMessage);
 
             // Re-enable submit button
             submitBtn.disabled = false;
