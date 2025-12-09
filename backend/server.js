@@ -187,17 +187,32 @@ function formatClientMessage(data) {
         }
     }
 
-    // Build the message
-    const message = `📌 New Client Submission
+    // Get submission timestamp
+    const now = new Date();
+    const submittedDateTime = now.toLocaleString('en-US', {
+        timeZone: 'Asia/Bangkok',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    });
 
-🏢 Company: ${company}
-👤 Contact: ${contact}
-📞 Phone: ${phone}
-📦 Product: ${product}
-🔢 Quantity: ${quantity}
-💰 Budget: ${budget}
-📅 Target Delivery: ${formattedDeadline}
-📝 Notes:
+    // Build the bilingual message
+    const message = `📌 New Client Submission / ใบสั่งซื้อใหม่
+━━━━━━━━━━━━━━━━━━━━
+⏰ Submitted / วันที่ส่ง: ${submittedDateTime}
+
+🏢 Company / บริษัท: ${company}
+👤 Contact / ผู้ติดต่อ: ${contact}
+📞 Phone / โทร: ${phone}
+📦 Product / สินค้า: ${product}
+🔢 Quantity / จำนวน: ${quantity}
+💰 Budget / งบประมาณ: ${budget}
+📅 Target Delivery / วันที่ต้องการ: ${formattedDeadline}
+━━━━━━━━━━━━━━━━━━━━
+📝 Notes / หมายเหตุ:
 ${notes || "-"}`;
 
     return message;
