@@ -80,7 +80,7 @@ label {
 }
 
 .required {
-    color: #e74c3c;
+    color: #cf1d06;
     font-weight: bold;
 }
 
@@ -95,7 +95,7 @@ label {
 /* Validation feedback */
 input:invalid:not(:placeholder-shown),
 select:invalid:not(:placeholder-shown) {
-    border-color: #ff6b6b;
+    border-color: #cf1d06;
 }
 
 input:valid:not(:placeholder-shown),
@@ -202,8 +202,8 @@ textarea {
     padding: 18px;
     font-size: 18px;
     font-weight: 600;
-    color: #3F4443;
-    background: #FFC600;
+    color: white;
+    background: #ffa400;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -213,8 +213,8 @@ textarea {
 
 .submit-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 198, 0, 0.5);
-    background: #FFD633;
+    box-shadow: 0 6px 20px rgba(255, 164, 0, 0.5);
+    background: #ff8c00;
 }
 
 .submit-btn:active {
