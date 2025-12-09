@@ -176,19 +176,21 @@ textarea {
    ======================================== */
 .privacy-notice {
     text-align: center;
-    font-size: 11px;
-    color: #888;
+    font-size: 9px;
+    color: #aaa;
     margin-top: 12px;
-    line-height: 1.5;
+    line-height: 1.4;
+    opacity: 0.8;
 }
 
 .privacy-notice a {
-    color: #FFC600;
+    color: #bbb;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .privacy-notice a:hover {
+    color: #999;
     text-decoration: underline;
 }
 
