@@ -103,11 +103,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 // Personalized success message with customer's name
                 const customerName = userProfile?.displayName || "Valued Customer";
-                alert(`✅ Thank you, ${customerName}!\n\nYour order has been submitted successfully.\n\nOur sales team will contact you shortly.`);
+                alert(`✅ Thank you, ${customerName}!\n\nYour inquiry has been submitted successfully.\n\nOur sales team will contact you shortly.`);
 
-                // Close LIFF window after short delay
+                // Reset form for next submission
+                form.reset();
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Submit Inquiry";
+                loadingDiv.style.display = "none";
+
+                // Try to close LIFF window (works on mobile LINE app, not desktop browser)
                 setTimeout(() => {
-                    liff.closeWindow();
+                    if (liff.isInClient()) {
+                        liff.closeWindow();
+                    }
                 }, 1500);
             } else {
                 throw new Error(result.message || "Submission failed");
@@ -115,11 +123,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
         } catch (error) {
             console.error("Submission error:", error);
-            alert("❌ Failed to submit your order. Please try again or contact our sales team directly.");
+            alert("❌ Failed to submit your inquiry. Please try again or contact our sales team directly.");
 
             // Re-enable submit button
             submitBtn.disabled = false;
-            submitBtn.textContent = "Submit Order";
+            submitBtn.textContent = "Submit Inquiry";
             loadingDiv.style.display = "none";
         }
     });
