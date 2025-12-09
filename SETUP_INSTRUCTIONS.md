@@ -99,8 +99,10 @@ However, you can optionally enable:
 
 **Final connection string example:**
 ```
-mongodb+srv://gmf-admin:Abc123XyZ789@gmf-liff-cluster.xxxxx.mongodb.net/?retryWrites=true&w=majority
+mongodb+srv://gmf-admin:YOUR_PASSWORD_HERE@gmf-liff-cluster.xxxxx.mongodb.net/?retryWrites=true&w=majority
 ```
+
+**Note:** Replace `YOUR_PASSWORD_HERE` with your actual password from Step 3. Do NOT commit this connection string to GitHub - only add it to Vercel Environment Variables.
 
 ---
 
