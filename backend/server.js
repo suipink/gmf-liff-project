@@ -200,13 +200,12 @@ function formatClientMessage(data) {
     });
 
     // Build the message
-    const message = `📌 New Client Submission
+    const message = `📌 Client Inquiry
 ━━━━━━━━━━
 ⏰ Submitted:
 ${submittedDateTime}
 
 ━━━━━━━━━━
-👥 CLIENT INFORMATION
 🏢 Company:
 ${company}
 👤 Contact Person:
@@ -215,7 +214,6 @@ ${contact}
 ${phone}
 
 ━━━━━━━━━━
-📦 ORDER DETAILS
 📦 Product:
 ${product}
 🔢 Quantity:
