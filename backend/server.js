@@ -201,21 +201,21 @@ function formatClientMessage(data) {
 
     // Build the message
     const message = `📌 Client Inquiry
-━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━
 ⏰ Submitted: ${submittedDateTime}
 
-━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━
 🏢 Company: ${company}
 👤 Contact Person: ${contact}
 📞 Phone: ${phone}
 
-━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━
 📦 Product: ${product}
 🔢 Quantity: ${quantity}
 💰 Budget Range: ${budget}
 📅 Target Delivery: ${formattedDeadline}
 
-━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━
 📝 ADDITIONAL NOTES
 ${notes || "-"}`;
 
