@@ -103,20 +103,35 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 // Personalized success message with customer's name
                 const customerName = userProfile?.displayName || "Valued Customer";
-                alert(`✅ Thank you, ${customerName}!\n\nYour inquiry has been submitted successfully.\n\nOur sales team will contact you shortly.`);
 
-                // Reset form for next submission
-                form.reset();
-                submitBtn.disabled = false;
-                submitBtn.textContent = "Submit Inquiry";
+                // Hide loading
                 loadingDiv.style.display = "none";
 
-                // Try to close LIFF window (works on mobile LINE app, not desktop browser)
+                // Replace form with success message
+                form.innerHTML = `
+                    <div style="text-align: center; padding: 60px 20px;">
+                        <div style="font-size: 64px; margin-bottom: 20px;">✅</div>
+                        <h2 style="color: #3F4443; margin-bottom: 16px; font-size: 28px;">Thank You, ${customerName}!</h2>
+                        <p style="color: #555; font-size: 18px; line-height: 1.6; margin-bottom: 24px;">
+                            Your inquiry has been submitted successfully.
+                        </p>
+                        <p style="color: #888; font-size: 16px;">
+                            Our sales team will contact you shortly.
+                        </p>
+                    </div>
+                `;
+
+                // Try to close window after delay
                 setTimeout(() => {
                     if (liff.isInClient()) {
+                        // Mobile LINE app - close LIFF window
                         liff.closeWindow();
+                    } else {
+                        // Desktop browser - try to close tab (may not work for all cases)
+                        window.close();
+                        // If window.close() fails, the success message will remain visible
                     }
-                }, 1500);
+                }, 2000);
             } else {
                 throw new Error(result.message || "Submission failed");
             }
