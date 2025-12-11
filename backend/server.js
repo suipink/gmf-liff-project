@@ -362,7 +362,7 @@ function formatClientMessage(data) {
 📦 Product: ${product}
 🔢 Quantity: ${quantity}
 💰 Budget: ${budget}
-📅 Target Date: ${formattedDeadline}
+🗓️ Target Date: ${formattedDeadline}
 ━━━━━━━━━━━━━
 🗒️ NOTES
 ${notes || "-"}`;
