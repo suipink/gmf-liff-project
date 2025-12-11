@@ -305,6 +305,7 @@ function formatClientMessage(data) {
 
     // Format deadline for better readability and calculate days
     let formattedDeadline = "-";
+    let daysCount = "";
     if (deadline) {
         try {
             const deadlineDate = new Date(deadline);
@@ -325,46 +326,53 @@ function formatClientMessage(data) {
                 day: "numeric"
             });
 
-            // Add days count if deadline is set
+            formattedDeadline = dateString;
+
+            // Add days count on separate line
             if (diffDays > 0) {
-                formattedDeadline = `${dateString} (${diffDays} days)`;
+                daysCount = `(${diffDays} days)`;
             } else if (diffDays === 0) {
-                formattedDeadline = `${dateString} (Today)`;
+                daysCount = "(Today)";
             } else {
-                formattedDeadline = `${dateString} (${Math.abs(diffDays)} days ago)`;
+                daysCount = `(${Math.abs(diffDays)} days ago)`;
             }
         } catch (e) {
             formattedDeadline = deadline;
         }
     }
 
-    // Get submission timestamp
+    // Get submission timestamp with "at" format
     const now = new Date();
-    const submittedDateTime = now.toLocaleString('en-US', {
+    const dateOptions = {
         timeZone: 'Asia/Bangkok',
         year: 'numeric',
         month: 'long',
-        day: 'numeric',
+        day: 'numeric'
+    };
+    const timeOptions = {
+        timeZone: 'Asia/Bangkok',
         hour: '2-digit',
         minute: '2-digit',
         hour12: false
-    });
+    };
+    const datePart = now.toLocaleDateString('en-US', dateOptions);
+    const timePart = now.toLocaleTimeString('en-US', timeOptions);
+    const submittedDateTime = `${datePart} at ${timePart}`;
 
     // Build the message
-    const message = `📌 Client Inquiry
+    const message = `Client Inquiry
+${submittedDateTime}
 ━━━━━━━━━━━━━
-📝 ${submittedDateTime}
+Company: ${company}
+Name: ${contact}
+Tel: ${phone}
 ━━━━━━━━━━━━━
-${company}
-${contact}
-📞 ${phone}
+Product: ${product}
+Quantity: ${quantity}
+Budget: ${budget}
+Target Date: ${formattedDeadline}${daysCount ? '\n' + daysCount : ''}
 ━━━━━━━━━━━━━
-- Product: ${product}
-- Quantity: ${quantity}
-- Budget: ${budget}
-🗓️ Target Date: ${formattedDeadline}
-━━━━━━━━━━━━━
-🗒️ NOTES
+NOTES
 ${notes || "-"}`;
 
     return message;
