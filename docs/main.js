@@ -121,15 +121,20 @@ document.addEventListener("DOMContentLoaded", function() {
             // Remove previous validation classes
             input.classList.remove('error', 'success');
 
+            // Get value handling different input types
+            const value = input.value;
+            const isEmpty = !value || (typeof value === 'string' && value.trim() === '');
+
             // Check if field is valid
-            if (field.required && (!input.value || input.value.trim() === '')) {
+            if (field.required && isEmpty) {
                 input.classList.add('error');
                 isValid = false;
             } else if (!input.checkValidity()) {
                 // Use HTML5 validation for format checks
                 input.classList.add('error');
                 isValid = false;
-            } else if (input.value && input.value.trim() !== '') {
+            } else if (field.required && !isEmpty) {
+                // Only show success for required fields that are filled
                 input.classList.add('success');
             }
         });

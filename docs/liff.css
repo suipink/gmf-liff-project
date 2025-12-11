@@ -80,7 +80,7 @@ label {
 }
 
 .required {
-    color: #cf1d06;
+    color: #dc2626;
     font-weight: bold;
 }
 
@@ -96,14 +96,14 @@ label {
 input.error,
 select.error,
 textarea.error {
-    border-color: #cf1d06;
-    background-color: #fff5f5;
+    border-color: #dc2626;
+    background-color: #fef2f2;
 }
 
 input.success,
 select.success,
 textarea.success {
-    border-color: #51cf66;
+    border-color: #16a34a;
     background-color: #f0fdf4;
 }
 
