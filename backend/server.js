@@ -389,7 +389,7 @@ function formatClientMessage(data) {
 
     // Build the message with proper line breaks
     let message = `${toBold('Client Inquiry')}
-${toItalic(submittedDateTime)}
+${submittedDateTime}
 ━━━━━━━━━━━━━
 ${toBold('Company:')} ${company}
 ${toBold('Name:')} ${contact}
