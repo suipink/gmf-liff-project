@@ -226,7 +226,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 // Replace form with success message
                 form.innerHTML = `
                     <div style="text-align: center; padding: 60px 20px;">
-                        <div style="font-size: 64px; margin-bottom: 20px;">✅</div>
+                        <img src="NongGiftSticker_Set2-07.png" alt="Success" style="width: 150px; height: auto; margin: 0 auto 20px; display: block;">
                         <h2 style="color: #3F4443; margin-bottom: 16px; font-size: 28px;">Thank You, ${customerName}!</h2>
                         <p style="color: #555; font-size: 18px; line-height: 1.6; margin-bottom: 24px;">
                             Your inquiry has been submitted successfully.
