@@ -242,7 +242,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     </div>
                 `;
 
-                // Try to close window after delay
+                // Try to close window after delay (3 seconds to let users read the message)
                 setTimeout(() => {
                     if (liff.isInClient()) {
                         // Mobile LINE app - close LIFF window
@@ -252,7 +252,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         window.close();
                         // If window.close() fails, the success message will remain visible
                     }
-                }, 1000);
+                }, 3000);
 
             } else {
                 // Backend returned an error
