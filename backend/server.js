@@ -131,8 +131,8 @@ function validatePhone(phone) {
 
 function sanitizeInput(input) {
     if (typeof input !== 'string') return input;
-    // Escape HTML and trim
-    return validator.escape(validator.trim(input));
+    // Just trim whitespace - no HTML escaping needed for plain text LINE messages
+    return validator.trim(input);
 }
 
 // ========================================
