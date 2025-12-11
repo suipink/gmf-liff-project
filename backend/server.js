@@ -353,7 +353,7 @@ function formatClientMessage(data) {
     // Build the message
     const message = `📌 Client Inquiry
 ━━━━━━━━━━━━━
-✅ ${submittedDateTime}
+📝 ${submittedDateTime}
 ━━━━━━━━━━━━━
 🏢 ${company}
 👤 ${contact}
@@ -364,7 +364,7 @@ function formatClientMessage(data) {
 💰 Budget: ${budget}
 📅 Target Date: ${formattedDeadline}
 ━━━━━━━━━━━━━
-📝 NOTES
+🗒️ NOTES
 ${notes || "-"}`;
 
     return message;
