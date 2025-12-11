@@ -186,10 +186,10 @@ app.post("/liff-submit", limiter, async (req, res) => {
         }
 
         // Validate quantity
-        if (sanitizedData.quantity < 1 || sanitizedData.quantity > 100000) {
+        if (sanitizedData.quantity < 100 || sanitizedData.quantity > 1000000) {
             return res.status(400).json({
                 ok: false,
-                message: "Quantity must be between 1 and 100,000 pieces"
+                message: "Quantity must be between 100 and 1,000,000 pieces"
             });
         }
 
