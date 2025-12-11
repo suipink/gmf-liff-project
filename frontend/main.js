@@ -100,8 +100,68 @@ document.addEventListener("DOMContentLoaded", function() {
         deadlineInput.setAttribute('min', today);
     }
 
+    // Validation helper function
+    function validateForm() {
+        let isValid = true;
+        const fields = [
+            { id: 'company', required: true },
+            { id: 'contact', required: true },
+            { id: 'phone', required: true },
+            { id: 'product', required: true },
+            { id: 'quantity', required: true },
+            { id: 'budget', required: true },
+            { id: 'deadline', required: true },
+            { id: 'notes', required: false }
+        ];
+
+        fields.forEach(field => {
+            const input = document.getElementById(field.id);
+            if (!input) return;
+
+            // Remove previous validation classes
+            input.classList.remove('error', 'success');
+
+            // Check if field is valid
+            if (field.required && (!input.value || input.value.trim() === '')) {
+                input.classList.add('error');
+                isValid = false;
+            } else if (!input.checkValidity()) {
+                // Use HTML5 validation for format checks
+                input.classList.add('error');
+                isValid = false;
+            } else if (input.value && input.value.trim() !== '') {
+                input.classList.add('success');
+            }
+        });
+
+        return isValid;
+    }
+
+    // Add real-time validation removal (remove error when user starts fixing)
+    const allInputs = form.querySelectorAll('input, select, textarea');
+    allInputs.forEach(input => {
+        input.addEventListener('input', function() {
+            // Remove error class when user starts typing
+            if (this.classList.contains('error')) {
+                this.classList.remove('error');
+            }
+        });
+    });
+
     form.addEventListener("submit", async function(event) {
         event.preventDefault();
+
+        // Validate form first
+        if (!validateForm()) {
+            // Scroll to first error
+            const firstError = form.querySelector('.error');
+            if (firstError) {
+                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                firstError.focus();
+            }
+            alert("⚠️ Please fill in all required fields correctly.");
+            return;
+        }
 
         // Check if we have user profile
         if (!userProfile || !userProfile.userId) {

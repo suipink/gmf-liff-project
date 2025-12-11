@@ -92,15 +92,19 @@ label {
     font-style: italic;
 }
 
-/* Validation feedback */
-input:invalid:not(:placeholder-shown),
-select:invalid:not(:placeholder-shown) {
+/* Manual validation feedback (only shown after submit) */
+input.error,
+select.error,
+textarea.error {
     border-color: #cf1d06;
+    background-color: #fff5f5;
 }
 
-input:valid:not(:placeholder-shown),
-select:valid {
+input.success,
+select.success,
+textarea.success {
     border-color: #51cf66;
+    background-color: #f0fdf4;
 }
 
 input[type="text"],
