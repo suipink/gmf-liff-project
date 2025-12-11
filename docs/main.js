@@ -93,6 +93,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const submitBtn = document.getElementById("submitBtn");
     const loadingDiv = document.getElementById("loading");
 
+    // Set minimum date to today for the deadline field
+    const deadlineInput = document.getElementById("deadline");
+    if (deadlineInput) {
+        const today = new Date().toISOString().split('T')[0];
+        deadlineInput.setAttribute('min', today);
+    }
+
     form.addEventListener("submit", async function(event) {
         event.preventDefault();
 
