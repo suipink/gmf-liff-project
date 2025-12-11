@@ -387,8 +387,8 @@ function formatClientMessage(data) {
     const timePart = now.toLocaleTimeString('en-US', timeOptions);
     const submittedDateTime = `${datePart} at ${timePart}`;
 
-    // Build the message
-    const message = `${toBold('Client Inquiry')}
+    // Build the message with proper line breaks
+    let message = `${toBold('Client Inquiry')}
 ${toItalic(submittedDateTime)}
 ━━━━━━━━━━━━━
 ${toBold('Company:')} ${company}
@@ -398,7 +398,14 @@ ${toBold('Tel:')} ${phone}
 ${toBold('Product:')} ${product}
 ${toBold('Quantity:')} ${quantity}
 ${toBold('Budget:')} ${budget}
-${toBold('Target Date:')} ${formattedDeadline}${daysCount ? '\n' + daysCount : ''}
+${toBold('Target Date:')} ${formattedDeadline}`;
+
+    // Add days count on new line if available
+    if (daysCount) {
+        message += '\n' + daysCount;
+    }
+
+    message += `
 ━━━━━━━━━━━━━
 ${toBold('NOTES')}
 ${notes || "-"}`;
