@@ -355,13 +355,13 @@ function formatClientMessage(data) {
 ━━━━━━━━━━━━━
 📝 ${submittedDateTime}
 ━━━━━━━━━━━━━
-🏢 ${company}
-👤 ${contact}
+${company}
+${contact}
 📞 ${phone}
 ━━━━━━━━━━━━━
-📦 Product: ${product}
-🔢 Quantity: ${quantity}
-💰 Budget: ${budget}
+- Product: ${product}
+- Quantity: ${quantity}
+- Budget: ${budget}
 🗓️ Target Date: ${formattedDeadline}
 ━━━━━━━━━━━━━
 🗒️ NOTES
