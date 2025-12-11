@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const value = input.value;
             const isEmpty = !value || (typeof value === 'string' && value.trim() === '');
 
-            // Check if field is valid
+            // Check if field is valid - only mark errors, no success state
             if (field.required && isEmpty) {
                 input.classList.add('error');
                 isValid = false;
@@ -133,10 +133,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 // Use HTML5 validation for format checks
                 input.classList.add('error');
                 isValid = false;
-            } else if (field.required && !isEmpty) {
-                // Only show success for required fields that are filled
-                input.classList.add('success');
             }
+            // Valid fields stay with default gray border (no green)
         });
 
         return isValid;
