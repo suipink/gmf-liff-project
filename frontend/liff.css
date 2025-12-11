@@ -100,12 +100,7 @@ textarea.error {
     background-color: #fef2f2;
 }
 
-input.success,
-select.success,
-textarea.success {
-    border-color: #16a34a;
-    background-color: #f0fdf4;
-}
+/* Success class removed - we only show errors, valid fields stay gray */
 
 input[type="text"],
 input[type="number"],
